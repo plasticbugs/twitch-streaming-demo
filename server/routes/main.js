@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const path = require('path');
 const passport = require('../../middleware/passport');
+const ChannelsController = require('../controllers/channels');
+
 
 router.route('/')
   .get((req, res) => {
@@ -22,10 +24,8 @@ router.get('/oauthcallback', passport.authenticate('google', {
   }
 );
 
-router.post('/api/stream-search', (req, res) => {
-  console.log(req.body.channelname);
-  res.sendStatus(201);
-})
+router.route('/api/stream-search')
+  .post(ChannelsController.findChannel)
 
 router.get('/logout', (req,res) => {
   res.clearCookie('loggedIn');
