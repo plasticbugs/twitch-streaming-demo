@@ -5,6 +5,7 @@ import axios from 'axios';
 import LoggedInUser from './LoggedInUser.jsx';
 import LoginScreen from './LoginScreen.jsx';
 import ChannelSearch from './ChannelSearch.jsx';
+import LiveStreamVideo from './LiveStreamVideo.jsx';
 
 const cookies = new UniversalCookies();
 
@@ -44,7 +45,7 @@ class App extends React.Component {
     let loginlogout;
     console.log(this.state);
     if(this.state.currentUser) {
-      loginlogout = <div><LoggedInUser userinfo={this.state.currentUser}/><ChannelSearch handleSearch={this.handleSearch} /></div>
+      loginlogout = <div><LoggedInUser userinfo={this.state.currentUser}/><ChannelSearch handleSearch={this.handleSearch} /><LiveStreamVideo /></div>
     } else {
       loginlogout = <LoginScreen />;
     }
