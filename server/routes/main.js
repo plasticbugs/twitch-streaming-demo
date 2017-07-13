@@ -22,7 +22,13 @@ router.get('/oauthcallback', passport.authenticate('google', {
   }
 );
 
-router.get('/hello', (req,res) => {
-  res.send("hi")
+router.get('/logout', (req,res) => {
+  res.clearCookie('loggedIn');
+  req.logout();
+  res.redirect('/');
+})
+
+router.get('/api/getcurrentuser', (req,res) => {
+  res.send(req.user);
 })
 module.exports = router;
