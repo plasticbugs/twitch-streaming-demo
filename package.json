@@ -28,6 +28,7 @@
     "passport-google-oauth": "^1.0.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
+    "twitch-api-v5": "^2.0.2",
     "universal-cookie": "^2.0.8",
     "webpack": "^3.2.0"
   }
