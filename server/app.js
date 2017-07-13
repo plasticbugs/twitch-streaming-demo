@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const passport = require('../middleware/passport');
 const session = require('express-session');
+const db = require('../db_config');
 
 const app = express();
 
