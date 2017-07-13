@@ -22,6 +22,11 @@ router.get('/oauthcallback', passport.authenticate('google', {
   }
 );
 
+router.post('/api/stream-search', (req, res) => {
+  console.log(req.body.channelname);
+  res.sendStatus(201);
+})
+
 router.get('/logout', (req,res) => {
   res.clearCookie('loggedIn');
   req.logout();
