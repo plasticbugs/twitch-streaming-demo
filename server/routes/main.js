@@ -36,4 +36,9 @@ router.get('/logout', (req,res) => {
 router.get('/api/getcurrentuser', (req,res) => {
   res.send(req.user);
 })
+
+router.post('/api/save-message', (req, res) => {
+  console.log(req.body);
+  res.send(200)
+})
 module.exports = router;
