@@ -4,7 +4,13 @@ api.clientID = process.env.TWITCH_CLIENT_ID;
 
 module.exports.findChannel = (req,res) => {
   api.search.channels({query: req.body.channelname}, (err, response) => {
-    console.log(response);
-    res.sendStatus(200);
+    if(err) {
+      console.log("API error: ", err);
+      res.sendStatus(501);
+      throw(err);
+    } else {
+      console.log(response);
+      res.send(response);
+    }
   })
 }
