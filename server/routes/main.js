@@ -26,19 +26,22 @@ router.get('/oauthcallback', passport.authenticate('google', {
 );
 
 router.route('/api/stream-search')
-  .post(ChannelsController.findChannel)
+  .post(ChannelsController.findChannel);
 
 router.get('/logout', (req,res) => {
   res.clearCookie('loggedIn');
   req.logout();
   res.redirect('/');
-})
+});
 
 router.get('/api/getcurrentuser', (req,res) => {
   res.send(req.user);
-})
+});
+
+router.route('/api/user-messages')
+  .get(MessagesController.showMessagesForUser);
 
 router.route('/api/save-message')
-  .post(MessagesController.saveMessage)
+  .post(MessagesController.saveMessage);
 
 module.exports = router;
