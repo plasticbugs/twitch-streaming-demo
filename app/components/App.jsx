@@ -5,7 +5,9 @@ import axios from 'axios';
 import LoggedInUser from './LoggedInUser.jsx';
 import LoginScreen from './LoginScreen.jsx';
 import ChannelSearch from './ChannelSearch.jsx';
-import LiveStreamVideo from './LiveStreamVideo.jsx';
+// import LiveStreamVideo from './LiveStreamVideo.jsx';
+import SearchResults from './SearchResults.jsx';
+import VideoPlayer from './VideoPlayer.jsx';
 
 const cookies = new UniversalCookies();
 
@@ -14,14 +16,21 @@ class App extends React.Component {
     super(props);
     this.state = {
       loggedIn: false,
-      currentUser: null
+      currentUser: null,
+      searchResults: [],
+      selectedVideo: null
     }
     this.getCurrentUser = this.getCurrentUser.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
+    this.handleChannelClick = this.handleChannelClick.bind(this);
   }
 
   handleSearch(e) {
     console.log(e.target.value);
+    axios.post('/api/stream-search', {channelname: e.target.value})
+    .then(response => {
+      this.setState({searchResults: response.data.channels});
+    })
   }
 
   componentDidMount() {
@@ -31,6 +40,11 @@ class App extends React.Component {
         this.setState({currentUser: data})
       })
     }
+  }
+
+  handleChannelClick(e, channelName) {
+    e.preventDefault();
+    this.setState({selectedVideo: channelName});
   }
 
   getCurrentUser(cb) {
@@ -43,9 +57,14 @@ class App extends React.Component {
 
   render() {
     let loginlogout;
-    console.log(this.state);
+    
     if(this.state.currentUser) {
-      loginlogout = <div><LoggedInUser userinfo={this.state.currentUser}/><ChannelSearch handleSearch={this.handleSearch} /><LiveStreamVideo /></div>
+      loginlogout = <div>
+        <LoggedInUser userinfo={this.state.currentUser}/>
+        <ChannelSearch handleSearch={this.handleSearch} />
+        <SearchResults handleChannelClick={this.handleChannelClick} results={this.state.searchResults} />
+        <VideoPlayer video={this.state.selectedVideo} />
+        </div>
     } else {
       loginlogout = <LoginScreen />;
     }
