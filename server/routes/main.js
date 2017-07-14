@@ -18,7 +18,6 @@ router.get('/auth/google', passport.authenticate('google', {
 router.get('/oauthcallback', passport.authenticate('google', {
   failureRedirect: '/' }),
   (req, res) => {
-    console.log(req.user);
     res.cookie('loggedIn', true, {path: '/'});
     req.session.user = req.user;
     res.redirect('/');

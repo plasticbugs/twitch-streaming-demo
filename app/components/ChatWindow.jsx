@@ -14,7 +14,6 @@ class ChatWindow extends React.Component {
   }
 
   handleUsernameClick(username) {
-    console.log(username);
     axios.get('/api/user-messages', { params: {
       user: username
     }})

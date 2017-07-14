@@ -23,8 +23,7 @@ class App extends React.Component {
       currentMessages: []
     }
     client.on("message", (channel, userstate, message, self) => {
-  // post username and their message to the server
-      console.log(userstate);
+    // post username and their message to the server
       let messagesCopy = this.state.currentMessages.slice();
       messagesCopy.push({
         userstate,
@@ -81,7 +80,6 @@ class App extends React.Component {
   getCurrentUser(cb) {
     axios.get('/api/getCurrentUser')
     .then(response => {
-      console.log(response.data);
      cb(response.data); 
     });
   }

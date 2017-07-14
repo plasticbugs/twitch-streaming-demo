@@ -32,7 +32,6 @@ module.exports.showMessagesForUser = (req, res) => {
     if(err) {
       throw(err)
     } else {
-      console.log(result)
       res.send(result);
     }
   })
