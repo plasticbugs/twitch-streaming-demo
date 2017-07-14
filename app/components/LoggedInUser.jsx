@@ -6,7 +6,7 @@ class LoggedInUser extends React.Component {
   }
 
   render() {
-    return <div>{this.props.userinfo.displayName}<br/><a href="/logout">Log out</a></div>;
+    return <div>Logged in as {this.props.userinfo.displayName}<br/><a href="/logout">Log out</a></div>;
   }
 }
 
