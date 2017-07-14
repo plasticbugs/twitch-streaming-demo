@@ -6,11 +6,10 @@ class SearchResults extends React.Component {
   }
 
   render() {
-    console.log(this.props.results)
     return (
       <ul>
         {this.props.results.map( channel => {
-          return <li onClick={(e) => {this.props.handleChannelClick(e, channel.name)}}><a href="">{channel.display_name}</a></li>
+          return <li key={channel.name} onClick={(e) => {this.props.handleChannelClick(e, channel.name)}}><a href="">{channel.display_name}</a></li>
         })}
       </ul>
     )
