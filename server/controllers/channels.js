@@ -9,7 +9,6 @@ module.exports.findChannel = (req,res) => {
       res.sendStatus(501);
       throw(err);
     } else {
-      console.log(response);
       res.send(response);
     }
   })
