@@ -6,7 +6,7 @@ class ChannelSearch extends React.Component {
   }
 
   render() {
-    return <div><input onInput={this.props.handleSearch} /></div>;
+    return <div><input placeholder="Search for a channel" onInput={this.props.handleSearch} /></div>;
   }
 }
 

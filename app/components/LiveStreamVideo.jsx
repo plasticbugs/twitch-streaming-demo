@@ -6,6 +6,7 @@ class LiveStreamVideo extends React.Component {
   }
 
   render() {
+    
     return <div className="videostream">Video Stream Placeholder</div>;
   }
 }
