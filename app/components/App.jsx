@@ -8,6 +8,7 @@ import ChannelSearch from './ChannelSearch.jsx';
 // import LiveStreamVideo from './LiveStreamVideo.jsx';
 import SearchResults from './SearchResults.jsx';
 import VideoPlayer from './VideoPlayer.jsx';
+import client from '../helpers/twitchHelper.js'
 
 const cookies = new UniversalCookies();
 
@@ -18,15 +19,33 @@ class App extends React.Component {
       loggedIn: false,
       currentUser: null,
       searchResults: [],
-      selectedVideo: null
+      selectedVideo: null,
+      currentMessages: []
     }
+    client.on("message", (channel, userstate, message, self) => {
+  // post username and their message to the server
+      console.log(userstate);
+      let messagesCopy = this.state.currentMessages.slice();
+      messagesCopy.push({
+        userstate,
+        message: message
+      })
+      axios.post('/api/save-message', {user: userstate.username, message})
+      .then(success => {
+        this.setState({currentMessages: messagesCopy});
+      })
+      .catch(error => {
+        console.log("Error saving to DB: ", error);
+      })
+    });
+
     this.getCurrentUser = this.getCurrentUser.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
     this.handleChannelClick = this.handleChannelClick.bind(this);
+    this.connectToChat = this.connectToChat.bind(this);
   }
 
   handleSearch(e) {
-    console.log(e.target.value);
     axios.post('/api/stream-search', {channelname: e.target.value})
     .then(response => {
       this.setState({searchResults: response.data.channels});
@@ -42,9 +61,21 @@ class App extends React.Component {
     }
   }
 
+  connectToChat(channel) {
+    this.setState({currentMessages: []}, () => {
+      client.join(channel)
+    })
+  }
+
   handleChannelClick(e, channelName) {
     e.preventDefault();
-    this.setState({selectedVideo: channelName});
+    if(this.state.selectedVideo) {
+      client.part(this.state.selectedVideo);
+    }
+    this.setState({selectedVideo: channelName}, () => {
+      console.log(this.state.selectedVideo)
+      this.connectToChat(channelName)
+    });
   }
 
   getCurrentUser(cb) {
@@ -57,13 +88,15 @@ class App extends React.Component {
 
   render() {
     let loginlogout;
-    
     if(this.state.currentUser) {
       loginlogout = <div>
         <LoggedInUser userinfo={this.state.currentUser}/>
         <ChannelSearch handleSearch={this.handleSearch} />
         <SearchResults handleChannelClick={this.handleChannelClick} results={this.state.searchResults} />
         <VideoPlayer video={this.state.selectedVideo} />
+        { this.state.currentMessages.map(item => {
+          return <div key={item.userstate.id}>{item.userstate["display-name"]}{item.message}</div>
+        })}
         </div>
     } else {
       loginlogout = <LoginScreen />;
