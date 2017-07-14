@@ -3,6 +3,7 @@ const router = express.Router();
 const path = require('path');
 const passport = require('../../middleware/passport');
 const ChannelsController = require('../controllers/channels');
+const MessagesController = require('../controllers/messages');
 
 
 router.route('/')
@@ -37,8 +38,7 @@ router.get('/api/getcurrentuser', (req,res) => {
   res.send(req.user);
 })
 
-router.post('/api/save-message', (req, res) => {
-  console.log(req.body);
-  res.send(200)
-})
+router.route('/api/save-message')
+  .post(MessagesController.saveMessage)
+
 module.exports = router;
