@@ -1,12 +1,6 @@
-var tmi = require("tmi.js");
+var User = require('../models/users');
 
-var client = new tmi.client({
-    identity: {
-        username: process.env.TWITCH_USERNAME,
-        password: process.env.TWITCH_CHAT_TOKEN
-    },
-    channels: ["#schmoopiie"]
-});
-
-// Connect the client to the server..
-client.connect();
+module.exports.saveMessage = (req, res) => {
+  console.log(req.body);
+  res.sendStatus(200)
+}
