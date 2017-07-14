@@ -26,13 +26,13 @@ module.exports.saveMessage = (req, res) => {
 }
 
 module.exports.showMessagesForUser = (req, res) => {
-  console.log(req)
   User.findOne({ username: req.query.user})
   .populate({ path: 'messages'})
   .exec((err, result) => {
     if(err) {
       throw(err)
     } else {
+      console.log(result)
       res.send(result);
     }
   })
