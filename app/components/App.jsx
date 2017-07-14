@@ -24,6 +24,9 @@ class App extends React.Component {
     }
     client.on("message", (channel, userstate, message, self) => {
     // post username and their message to the server
+      if(userstate["display-name"] === null) {
+        userstate["display-name"] = userstate.username;
+      }
       let messagesCopy = this.state.currentMessages.slice();
       messagesCopy.push({
         userstate,
