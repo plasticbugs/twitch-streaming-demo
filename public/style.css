@@ -52,12 +52,14 @@ body {
 }
 
 #container {
-	font-family: 'Poppins', sans-serif;
+	font-family: 'Oxygen', sans-serif;
 	background-color: #F9FFF5;
 	padding: 40px;
 }
 
-
+.search-result {
+	padding-bottom: 6px;
+}
 
 header {
 	font-size: 2em;
@@ -79,6 +81,25 @@ header {
 	font-size: .8em;
 	padding-bottom: 6px;
 	line-height: 1.4em;
+}
+
+.login {
+	width: 200px;
+	height: 30px;
+	background-color: #fefefe;
+	border: 1px solid #555;
+	text-align: center;
+}
+
+.login a {
+  display:inline-block;
+  width:100%;
+  height:100%;
+	text-decoration: none;
+}
+
+.login-link {
+	padding-top: 5px;
 }
 
 .username {

@@ -6,7 +6,15 @@ class LoginScreen extends React.Component {
   }
 
   render() {
-    return <div className="login"><a href="/auth/google">Log in</a></div>;
+    return (
+      <div className="login">
+        <a href="/auth/google">
+          <div className="login-link">
+            Log in with Google
+          </div>
+        </a>
+      </div>
+    )
   }
 }
 

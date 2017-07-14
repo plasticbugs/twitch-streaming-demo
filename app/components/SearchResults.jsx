@@ -9,7 +9,7 @@ class SearchResults extends React.Component {
     return (
       <ul>
         {this.props.results.map( channel => {
-          return <li key={channel.name} onClick={(e) => {this.props.handleChannelClick(e, channel.name)}}><a href="">{channel.display_name}</a></li>
+          return <li className="search-result" key={channel.name} onClick={(e) => {this.props.handleChannelClick(e, channel.name)}}><a href="">{channel.display_name}</a></li>
         })}
       </ul>
     )
