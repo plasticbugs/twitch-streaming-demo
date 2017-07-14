@@ -13,9 +13,9 @@ class VideoPlayer extends React.Component {
           src={source}
           height="360"
           width="640"
-          frameborder="0"
+          frameBorder="0"
           scrolling="no"
-          allowfullscreen="true">
+          allowFullScreen="true">
         </iframe>
       );
     } else {
