@@ -30,7 +30,7 @@ class App extends React.Component {
         userstate,
         message: message
       })
-      axios.post('/api/save-message', {user: userstate.username, message})
+      axios.post('/api/save-message', {user: userstate["display-name"], message})
       .then(success => {
         this.setState({currentMessages: messagesCopy});
       })
