@@ -6,8 +6,8 @@ import LoggedInUser from './LoggedInUser.jsx';
 import LoginScreen from './LoginScreen.jsx';
 import ChannelSearch from './ChannelSearch.jsx';
 // import LiveStreamVideo from './LiveStreamVideo.jsx';
-import SearchResults from './SearchResults.jsx';
 import VideoPlayer from './VideoPlayer.jsx';
+import ChatWindow from './ChatWindow.jsx';
 import client from '../helpers/twitchHelper.js'
 
 const cookies = new UniversalCookies();
@@ -45,8 +45,8 @@ class App extends React.Component {
     this.connectToChat = this.connectToChat.bind(this);
   }
 
-  handleSearch(e) {
-    axios.post('/api/stream-search', {channelname: e.target.value})
+  handleSearch(channel) {
+    axios.post('/api/stream-search', {channelname: channel})
     .then(response => {
       this.setState({searchResults: response.data.channels});
     })
@@ -67,8 +67,8 @@ class App extends React.Component {
     })
   }
 
-  handleChannelClick(e, channelName) {
-    e.preventDefault();
+  handleChannelClick(channelName) {
+    this.setState({searchResults: []})
     if(this.state.selectedVideo) {
       client.part(this.state.selectedVideo);
     }
@@ -91,12 +91,13 @@ class App extends React.Component {
     if(this.state.currentUser) {
       loginlogout = <div>
         <LoggedInUser userinfo={this.state.currentUser}/>
-        <ChannelSearch handleSearch={this.handleSearch} />
-        <SearchResults handleChannelClick={this.handleChannelClick} results={this.state.searchResults} />
+        <ChannelSearch 
+          handleSearch={this.handleSearch} 
+          handleClick={this.handleChannelClick} 
+          searchResults={this.state.searchResults}
+        />
         <VideoPlayer video={this.state.selectedVideo} />
-        { this.state.currentMessages.map(item => {
-          return <div key={item.userstate.id}>{item.userstate["display-name"]}{item.message}</div>
-        })}
+        <ChatWindow messages={this.state.currentMessages} video={this.state.selectedVideo} />
         </div>
     } else {
       loginlogout = <LoginScreen />;
