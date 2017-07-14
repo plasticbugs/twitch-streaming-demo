@@ -102,3 +102,8 @@ input {
 	margin-bottom: 15px;
 	padding: 4px 6px 4px 6px;
 }
+
+.goback {
+	font-size: .6em;
+	padding: 6px 0 10px 0;
+}
